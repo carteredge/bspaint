@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+    padding: 0;
+}
+
+button {
+    border: 1px solid #222;
+    border-radius: 1rem;
+}
+
+button.active {
+    border: 2px solid #aae;
+}
+
+header {
+    min-height: 4rem;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: Sans-Serif;
+    font-size: 1.2rem;
+    min-height: 4rem;
+    padding: 1rem 2rem;
+}
+
+#animationCanvas {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#canvas {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#canvasBox {
+    height: 500px;
+    max-height: 500px;
+    max-width: 100vw;
+    width: 500px;
+    border: thin solid #555;
+    cursor: crosshair;
+    margin: 0 auto;
+}
+
+#controlBox, #toolBox {
+    justify-content: flex-start;
+}
+
+.toolBox {
+    align-items: center;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.toolBox > button {
+    margin: 0.5rem;
+    height: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+}
+
+.box {
+    align-items: flex-start;
+    background-color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column wrap;
+    height: 100%;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0 2rem 1rem 2rem;
+    white-space: nowrap;
+    width: 100vw;
+}
+
+.page > * {
+    flex: 1;
+}
+
+@media only screen and (min-width: 700px) {
+    .toolBox > button {
+        margin: 1rem;
+    }       
+}
+
+@media only screen and (min-width: 550px) {
+    #canvasBox {
+        height: 500px;
+        max-height: 500px;
+        max-width: 100%;
+        width: 500px;
+        border: thin solid #555;
+        cursor: crosshair;
+        margin: 0 auto 0 25px;
+    }
+}
+
+@media only screen and (min-width: 375px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+}

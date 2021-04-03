@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>BS Paint</title>
+	<meta name="description" content="A shitty art program I made to learn the canvas element">
+	<meta name="author" content="Carter Edge">
+	<meta name="keywords" content="shitty, doodler, paint, canvas">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="bspaint.css">
+
+	<script src="bspaint.js"></script>
+	
+</head>
+
+<body>
+	<header>
+		<h1 id="smartAssery">Draw Shit.</h1>
+	</header>
+	<div id="canvasBox">
+	</div>
+	<div class="box">
+		<div id="allTheTools">
+			<div class="toolBox" id="controlBox">
+				<button id="undoButton" onclick="bspaint.undo()">Undoodle</button>
+				<button id="redoButton" onclick="bspaint.redo()">Redoodle</button>
+			</div>
+			<div class="toolBox" id="toolBox">
+				<button class="active" id="pen" onclick="bspaint.setTool('pen')">Scribbly Boi</button>
+				<button id="line" onclick="bspaint.setTool('line')">Thin Boi</button>
+				<button id="circle" onclick="bspaint.setTool('circle')">Round Boi</button>
+				<button id="rectangle" onclick="bspaint.setTool('rectangle')">Boxy Boi</button>
+				<button onclick="bspaint.clearCanvas()">Clear</button>
+			</div>
+			<div class="toolBox" id="fillColor">
+				<h2>Innie</h2>
+				<button key="black" class="active" style="background-color: #000;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="white" style="background-color: #fff;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="red" style="background-color: #e00;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="yellow" style="background-color: #ee0;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="green" style="background-color: #0e0;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="cyan" style="background-color: #0ee;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="blue" style="background-color: #00e;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="magenta" style="background-color: #e0e;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="transparent" style="background-color: #ffffff00;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">X</button>
+			</div>
+			<div class="toolBox" id="lineColor">
+				<h2>Outie</h2>
+				<button key="black" class="active" style="background-color: #000;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="white" style="background-color: #fff;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="red" style="background-color: #e00;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="yellow" style="background-color: #ee0;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="green" style="background-color: #0e0;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="cyan" style="background-color: #0ee;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="blue" style="background-color: #00e;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="magenta" style="background-color: #e0e;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
+				<button key="transparent" style="background-color: #ffffff00;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">X</button>
+			</div>
+		</div>
+	</div>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<canvas id="animationCanvas" width="500" height="500"></canvas>
+</body>
+</html>
