@@ -85,6 +85,31 @@ h1 {
     flex: 1;
 }
 
+footer {
+    border-top: 1px solid lightgray;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 50px;
+    padding: 10px 30px;
+}
+
+footer > div {
+    padding-bottom: 10px;
+}
+
+footer span {
+    padding-bottom: 5px;
+}
+
+footer img {
+    padding: 0 1rem;
+}
+
+.site-link {
+    align-items: flex-end;
+    display: flex;
+    justify-content: flex-start;
+}
+
 @media only screen and (min-width: 700px) {
     .toolBox > button {
         margin: 1rem;
