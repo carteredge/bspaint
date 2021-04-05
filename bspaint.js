@@ -364,14 +364,15 @@ class BSPaint {
                 y = this.currentMouse.y;
                 break;
         }
+        const p = this.convertCoordinates(x, y);
         if (event.type === "mousedown" || event.type === "touchstart") {
             if (!BSPaint.isInToolBox(x, y) || this.fuckIt) {
-                this.mousedown = {x, y};
+                this.mousedown = {x: p.x, y: p.y};
                 clearInterval(this.animation);
                 this.animation = setInterval(this.animateDrawing, 50);
                 if (this.currentTool === "pen") {
-                    this.previousMouse = {x, y};
-                    this.currentMouse = {x, y};
+                    this.previousMouse = {x: p.x, y: p.y};
+                    this.currentMouse = {x: p.x, y: p.y};
                     clearInterval(this.penInterval);
                     this.penInterval = setInterval(this.penDraw, 10);
                 }
