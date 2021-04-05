@@ -405,13 +405,15 @@ class BSPaint {
     }
 
     eraseOutsideBox(context) {
-        // TODO: getBoundingClientRect()
-        context.clearRect(0, 0, this.canvasBox.offsetLeft, this.canvas.height);
-        context.clearRect(0, 0, this.canvas.width, this.canvasBox.offsetTop);
-        context.clearRect(this.canvasBox.offsetLeft + this.canvasBox.offsetWidth, 0, 
-            this.canvas.width - (this.canvasBox.offsetLeft + this.canvasBox.offsetWidth), this.canvas.height);
-        context.clearRect(0, this.canvasBox.offsetTop + this.canvasBox.offsetHeight, this.canvas.width,
-            this.canvas.height - (this.canvasBox.offsetTop + this.canvasBox.offsetHeight));
+        if (this.startedInBox && !this.fuckIt) {
+            // TODO: getBoundingClientRect()
+            context.clearRect(0, 0, this.canvasBox.offsetLeft, this.canvas.height);
+            context.clearRect(0, 0, this.canvas.width, this.canvasBox.offsetTop);
+            context.clearRect(this.canvasBox.offsetLeft + this.canvasBox.offsetWidth, 0, 
+                this.canvas.width - (this.canvasBox.offsetLeft + this.canvasBox.offsetWidth), this.canvas.height);
+            context.clearRect(0, this.canvasBox.offsetTop + this.canvasBox.offsetHeight, this.canvas.width,
+                this.canvas.height - (this.canvasBox.offsetTop + this.canvasBox.offsetHeight));
+        }
     }
 
     handleKeyDown(event) {
@@ -466,7 +468,7 @@ class BSPaint {
         this.canvasContext.lineWidth = 2;
 
         if (this.undoings.length)
-        this.canvasContext.putImageData(this.undoings[this.undoings.length - 1], 0, 0);
+            this.canvasContext.putImageData(this.undoings[this.undoings.length - 1], 0, 0);
         this.eraseOutsideBox(this.canvasContext);
     }
     
@@ -628,8 +630,7 @@ class BSPaint {
                 clearInterval(this.penInterval);
                 break;
         }
-        if (this.startedInBox && !this.fuckIt)
-            this.eraseOutsideBox(context);
+        this.eraseOutsideBox(context);
     }    
 }
 
