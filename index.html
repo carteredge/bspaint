@@ -16,6 +16,7 @@
 </head>
 
 <body>
+	<div class="page">
 	<header>
 		<h1 id="smartAssery">Draw Shit.</h1>
 	</header>
@@ -27,13 +28,15 @@
 				<button id="undoButton" onclick="bspaint.undo()">Undoodle</button>
 				<button id="redoButton" onclick="bspaint.redo()">Redoodle</button>
 			</div>
-			<div class="toolBox" id="toolBox">
+			<div class="toolBox hideWhenSmol" id="toolBox">
 				<button class="active" id="pen" onclick="bspaint.setTool('pen')">Scribbly Boi</button>
 				<button id="line" onclick="bspaint.setTool('line')">Thin Boi</button>
 				<button id="circle" onclick="bspaint.setTool('circle')">Round Boi</button>
 				<button id="rectangle" onclick="bspaint.setTool('rectangle')">Boxy Boi</button>
 				<button onclick="bspaint.clearCanvas()">Clear</button>
+				<button class="closer hideWhenBig" aria-label="Close tool menu" onclick="bspaint.toggle('toolBox')">X</button>
 			</div>
+			<div class="hideWhenSmol" id="colorMenus">
 			<div class="toolBox" id="fillColor">
 				<h2>Innie</h2>
 				<button key="black" class="active" style="background-color: #000;" onclick="bspaint.setFillColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
@@ -58,16 +61,31 @@
 				<button key="magenta" style="background-color: #e0e;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">&nbsp;</button>
 				<button key="transparent" style="background-color: #ffffff00;" onclick="bspaint.setLineColor(this.style.backgroundColor, this.getAttribute('key'))">X</button>
 			</div>
+			<button class="closer hideWhenBig" aria-label="Close color menu" onclick="bspaint.toggle('colorMenus')">X</button>
+			</div>
+			<div id="smolMenus" class="hideWhenBig toolBox">
+				<button id="toolMenu" onclick="bspaint.toggle('toolBox')">
+					Tools
+				</button>
+				<button id="colorMenu" onclick="bspaint.toggle('colorMenus')">
+					Colors
+				</button>
+				<button onclick="bspaint.toggle('about')">
+					About
+				</button>
+			</div>
 		</div>
 	</div>
-	<canvas id="canvas" width="500" height="500"></canvas>
-	<canvas id="animationCanvas" width="500" height="500"></canvas>
-    <footer>
+	<canvas id="canvas" width="1" height="1"></canvas>
+	<canvas id="animationCanvas" width="1" height="1"></canvas>
+    <footer class="hideWhenSmol" id="about">
+		<button class="closer hideWhenBig" aria-label="Close about section" onclick="bspaint.toggle('about')">X</button>
 		<div class="site-link"> <img alt="Robot logo" src="io-32x32.png"/><span>Made by <a href="https://www.carteredge.dev">Carter Edge</a></span></div>
         <div class="coffee-btn">
             <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="carteredge" data-color="#5F7FFF" data-emoji="☕"  data-font="Lato" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
         </div>
         <small>Robot logo &copy; 2021 Carter Edge. All other content is under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU General Public License v3.0</a> unless otherwise noted.</small>
     </footer>
+	</div>
 </body>
 </html>

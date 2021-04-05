@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     overflow-x: hidden;
@@ -13,8 +17,16 @@ button.active {
     border: 2px solid #aae;
 }
 
+canvas {
+    z-index: 1;
+}
+
+canvas.fucked {
+    z-index: 3;
+}
+
 header {
-    min-height: 4rem;
+    flex: 1 0 4rem;
     overflow: hidden;
 }
 
@@ -22,7 +34,16 @@ h1 {
     font-family: Sans-Serif;
     font-size: 1.2rem;
     min-height: 4rem;
-    padding: 1rem 2rem;
+    padding: 0.5rem;
+}
+
+h2 {
+    margin-left: 1rem;
+    width: 100%;
+}
+
+#allTheTools {
+    width: 100%;
 }
 
 #animationCanvas {
@@ -40,31 +61,57 @@ h1 {
 }
 
 #canvasBox {
+    flex: 0 1 500px;
     height: 500px;
-    max-height: 500px;
+    max-height: 100vw;
     max-width: 100vw;
     width: 500px;
-    border: thin solid #555;
+    border: 2px solid #555;
     cursor: crosshair;
     margin: 0 auto;
 }
 
-#controlBox, #toolBox {
-    justify-content: flex-start;
+button.closer.hideWhenBig {
+    border: 0 none transparent;
+    height: 1.5rem;
+    width: 1.5rem;
+    min-width: 0;
+    margin: 0;
+    position: absolute;
+    right: 2px;
+    top: 2px;
 }
 
 .toolBox {
     align-items: center;
     display: flex;
+    flex: 1;
     flex-flow: row wrap;
     justify-content: center;
+}
+
+.hideWhenSmol, .hideWhenSmol * {
+    z-index: 2;
 }
 
 .toolBox > button {
     margin: 0.5rem;
     height: 2rem;
     min-width: 2rem;
-    height: 2rem;
+}
+
+.hideWhenSmol {
+    background-color: white;
+    border: 1px solid gray;
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+#fillColor, #lineColor {
+    border: 1px solid gray;
 }
 
 .box {
@@ -72,18 +119,37 @@ h1 {
     background-color: #fff;
     box-sizing: border-box;
     display: flex;
+    flex: 1 1 11rem;
     flex-flow: column wrap;
     height: 100%;
     justify-content: center;
     overflow: hidden;
-    padding: 0 2rem 1rem 2rem;
+    padding: 0 0 1rem 0;
     white-space: nowrap;
     width: 100vw;
 }
 
-.page > * {
-    flex: 1;
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
+
+.visible {
+    display: flex;
+}
+
+#about.visible {
+    display: block;
+}
+
+/* .togglydo {
+    height: 36px;
+    width: 36px;
+    display: flex;
+    border-radius: 4px;
+    padding: 1px;
+} */
 
 footer {
     border-top: 1px solid lightgray;
@@ -110,21 +176,56 @@ footer img {
     justify-content: flex-start;
 }
 
-@media only screen and (min-width: 700px) {
+/* @media only screen and (min-width: 700px) {
     .toolBox > button {
         margin: 1rem;
     }       
-}
+} */
 
 @media only screen and (min-width: 550px) {
+    h1 {
+        padding: 1rem 2rem;
+    }
+
+    h2 {
+        width: auto;
+        margin-left: 0;
+    }
+
+    #allTheTools {
+        width: auto;
+    }
     #canvasBox {
         height: 500px;
         max-height: 500px;
         max-width: 100%;
         width: 500px;
-        border: thin solid #555;
         cursor: crosshair;
         margin: 0 auto 0 25px;
+    }
+
+    #controlBox, #toolBox {
+        justify-content: flex-start;
+    }
+
+    #lineColor, #fillColor {
+        border: 0 none transparent;
+    }
+
+    .box {
+        flex: 1 1 20rem;
+        padding: 0 2rem 1rem 2rem;
+    }
+
+    .hideWhenBig {
+        display: none;
+    }
+    
+    .hideWhenSmol {
+        display: unset;
+        border: 0 none transparent;
+        position: static;
+        width: auto;
     }
 }
 

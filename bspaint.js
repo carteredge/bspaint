@@ -42,6 +42,20 @@ class BSPaint {
         "rectangle": "boxes"
     }
 
+    static isInBox(x, y, element) {
+        const rect = element.getBoundingClientRect();
+        return x > rect.left &&
+            x < rect.right &&
+            y > rect.top &&
+            y < rect.bottom;
+    }
+
+    static isInToolBox(x, y) {
+        return ["controlBox", "toolBox", "colorMenus", "smolMenus", "about"
+            ].some(id => BSPaint.isInBox(x, y, document.getElementById(id)));
+    }
+
+
     static randomInt(n) {
         return Math.floor(Math.random() * n);
     }    
@@ -95,6 +109,12 @@ class BSPaint {
         document.addEventListener("mousemove", (event) => {
             this.currentMouse = this.convertCoordinates(event.clientX, event.clientY);
         });
+        document.addEventListener("touchstart", this.draw);
+        document.addEventListener("touchend", this.draw);
+        document.addEventListener("touchmove", (event) =>
+            this.currentMouse = this.convertCoordinates(event.touches?.[0]?.clientX, event.touches?.[0]?.clientY));
+
+
         document.addEventListener("keydown", this.handleKeyDown);
         window.addEventListener("resize", this.resizeCanvas);
     }
@@ -258,12 +278,13 @@ class BSPaint {
             if (this.offCanvasCount === BSPaint.offCanvas.length) {
                 this.fuckIt = true;
                 this.canvas.style.pointerEvents = "auto";
+                document.querySelectorAll("canvas").forEach(e => e.classList.add("fucked"));
             }
         } else if (!this.fuckIt && this.lineColorName === "transparent" && this.fillColorName === "transparent") {
             this.smartAssery.innerText = "See? There's nothing there. What did I fucking tell you?";
         } else if (this.fuckIt && 
-                this.isInBox(this.mousedown.x, this.mousedown.y, this.allTheTools) && 
-                this.isInBox(this.currentMouse.x, this.currentMouse.y, this.allTheTools)) {
+                BSPaint.isInToolBox(this.mousedown.x, this.mousedown.y) && 
+                BSPaint.isInToolBox(this.currentMouse.x, this.currentMouse.y)) {
             if (this.noButtons) {
                 switch(BSPaint.randomInt(2)) {
                     case 0:
@@ -322,16 +343,30 @@ class BSPaint {
     }
 
     draw(event) {
-        if (event.type === "mousedown") {
-            if (!this.isInBox(event.clientX, event.clientY, this.allTheTools) || this.fuckIt) {
-                this.mousedown = {x: event.clientX, y: event.clientY};
+        let x, y;
+        switch (event.type) {
+            case "mousedown":
+            case "mouseup":
+                x = event.clientX;
+                y = event.clientY;
+                break;
+            case "touchstart":
+                x = event.touches?.[0]?.clientX;
+                y = event.touches?.[0]?.clientY;
+                break;
+            case "touchend":
+                x = this.currentMouse.x;
+                y = this.currentMouse.y;
+                break;
+        }
+        if (event.type === "mousedown" || event.type === "touchstart") {
+            if (!BSPaint.isInToolBox(x, y) || this.fuckIt) {
+                this.mousedown = {x, y};
                 clearInterval(this.animation);
                 this.animation = setInterval(this.animateDrawing, 50);
                 if (this.currentTool === "pen") {
-                    this.previousMouse = {
-                        x: this.currentMouse.x,
-                        y: this.currentMouse.y
-                    };
+                    this.previousMouse = {x, y};
+                    this.currentMouse = {x, y};
                     clearInterval(this.penInterval);
                     this.penInterval = setInterval(this.penDraw, 10);
                 }
@@ -339,7 +374,7 @@ class BSPaint {
                     clearInterval(this.penInterval);
                     this.penInterval = undefined;
                 }
-                this.startedInBox = this.isInBox(this.mousedown.x, this.mousedown.y, this.canvasBox);
+                this.startedInBox = BSPaint.isInBox(this.mousedown.x, this.mousedown.y, this.canvasBox);
             } else {
                 this.mousedown = {x: undefined, y: undefined};
             }
@@ -349,10 +384,10 @@ class BSPaint {
             if (this.mousedown.x !== undefined) {
                 if (!this.fuckIt || 
                         !this.noButtons ||
-                        !this.isInBox(this.mousedown.x, this.mousedown.y, this.allTheTools) ||
-                        !this.isInBox(event.clientX, event.clientY, this.allTheTools) ||
+                        !BSPaint.isInToolBox(this.mousedown.x, this.mousedown.y) ||
+                        !BSPaint.isInToolBox(x, y) ||
                         Math.random() < 0.75) {
-                    this.useTool(this.currentTool, this.canvasContext, this.mousedown.x, this.mousedown.y, event.clientX, event.clientY);
+                    this.useTool(this.currentTool, this.canvasContext, this.mousedown.x, this.mousedown.y, x, y);
                     this.did();
                 } else {
                     clearInterval(this.penInterval);
@@ -382,14 +417,6 @@ class BSPaint {
         else if (event.keyCode == 89 && event.ctrlKey)
             this.redo();
     }
-
-    isInBox(x, y, element) {
-        const rect = element.getBoundingClientRect();
-        return x > rect.left &&
-            x < rect.right &&
-            y > rect.top &&
-            y < rect.bottom;
-    }    
 
     penDraw() {
         this.useTool(
@@ -431,6 +458,7 @@ class BSPaint {
 
         if (this.undoings.length)
         this.canvasContext.putImageData(this.undoings[this.undoings.length - 1], 0, 0);
+        this.eraseOutsideBox(this.canvasContext);
     }
     
     setAllColors(colorName) {
@@ -532,7 +560,12 @@ class BSPaint {
                     break;
             }
         }
-    }    
+    }
+    
+    toggle(...ids) {
+        for (let id of ids)
+            document.getElementById(id)?.classList.toggle("visible");
+    }
 
     undo(force) {
         if (this.noButtons && !force) {
