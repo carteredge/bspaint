@@ -43,7 +43,8 @@ h2 {
 }
 
 #allTheTools {
-    width: 100%;
+    margin: 0 auto;
+    width: auto;
 }
 
 #animationCanvas {
@@ -71,7 +72,12 @@ h2 {
     margin: 0 auto;
 }
 
+#toolBox {
+    padding-right: 1.5rem;
+}
+
 button.closer.hideWhenBig {
+    background-color: transparent;
     border: 0 none transparent;
     height: 1.5rem;
     width: 1.5rem;
@@ -143,14 +149,6 @@ button.closer.hideWhenBig {
     display: block;
 }
 
-/* .togglydo {
-    height: 36px;
-    width: 36px;
-    display: flex;
-    border-radius: 4px;
-    padding: 1px;
-} */
-
 footer {
     border-top: 1px solid lightgray;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -176,12 +174,6 @@ footer img {
     justify-content: flex-start;
 }
 
-/* @media only screen and (min-width: 700px) {
-    .toolBox > button {
-        margin: 1rem;
-    }       
-} */
-
 @media only screen and (min-width: 550px) {
     h1 {
         padding: 1rem 2rem;
@@ -193,7 +185,7 @@ footer img {
     }
 
     #allTheTools {
-        width: auto;
+        width: 100%;
     }
     #canvasBox {
         height: 500px;

@@ -257,6 +257,11 @@ class BSPaint {
                 this.smartAssery.innerText = "Starting fresh. Fuck the whole thing.";
             }
         } else this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.closeMenus();
+    }
+
+    closeMenus() {
+        document.querySelectorAll(".hideWhenSmol").forEach(e => e.classList.remove("visible"));
     }
     
     convertCoordinates(x, y, element) {
@@ -305,9 +310,9 @@ class BSPaint {
                             [...this.toolBox.getElementsByTagName("button")]
                                     .forEach((button) => {
                                 button.classList.remove("active")});
-                            document.getElementById(currentTool).classList.add("active");
+                            document.getElementById(this.currentTool).classList.add("active");
                             this.smartAssery.innerText = "I hope you like fucking " + 
-                                BSPaint.toolPlurals[currentTool] + ".";
+                                BSPaint.toolPlurals[this.currentTool] + ".";
                         }
                         break;
                 }
@@ -560,11 +565,21 @@ class BSPaint {
                     break;
             }
         }
+        this.closeMenus();
     }
     
     toggle(...ids) {
-        for (let id of ids)
-            document.getElementById(id)?.classList.toggle("visible");
+        if (this.noButtons) {
+            this.smartAssery.innerText = "You think you're so fuckin' smart trying to use the keyboard or some shit.";
+            this.closeMenus();
+        } else if (this.fuckIt) {
+            this.smartAssery.innerText = "You want buttons? Maybe you should have fucking listened to me.";
+            this.noButtons = true;
+            this.closeMenus();
+        } else {
+            for (let id of ids)
+                document.getElementById(id)?.classList.toggle("visible");
+        }
     }
 
     undo(force) {
