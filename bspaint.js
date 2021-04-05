@@ -458,7 +458,11 @@ class BSPaint {
         this.canvas.width = window.innerWidth;
         this.animationCanvas.height = window.innerHeight;
         this.animationCanvas.width = window.innerWidth;
+        this.animationCanvasContext.fillColor = this.fillColor;
+        this.animationCanvasContext.lineColor = this.lineColor;
         this.animationCanvasContext.lineWidth = 2;
+        this.canvasContext.fillColor = this.fillColor;
+        this.canvasContext.lineColor = this.lineColor;
         this.canvasContext.lineWidth = 2;
 
         if (this.undoings.length)
