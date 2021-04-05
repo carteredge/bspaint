@@ -197,7 +197,7 @@ footer img {
         margin: 0 auto 0 25px;
     }
 
-    #controlBox, #toolBox {
+    .toolBox {
         justify-content: flex-start;
     }
 
